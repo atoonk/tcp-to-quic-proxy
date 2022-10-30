@@ -1,5 +1,5 @@
 # tcp-to-quic-proxy
-Quick to TCP proxy and vice versa. Mostlt to explore the Quic Go library
+Quic to TCP proxy and vice versa. Mostlt to explore the Quic Go library
 
 In this example we have 4 nodes, as the diagram below.  These are the nodes:
 1) a TCP listener, that proxies to an upstream Quic server
