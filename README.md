@@ -7,6 +7,9 @@ In this example we have 4 nodes, as the diagram below.  These are the nodes:
 3) an Iper3 client (tcp)
 3) an Iper3 server (tcp)
 
+
+![Topology](topology.png)
+
 Node 1 is started like this
 ```
 go run main.go -l 127.0.0.1:4201 -r 127.0.0.1:4202 -u quic -p tcp
@@ -36,3 +39,6 @@ Quic performance: ~ 1.25 Gbits/sec
 TCP performance: ~ 18.3 Gbits/sec
 
 Maybe related to TCP TSO?
+
+![Iperf restuls Quic](testresults.png)
+
