@@ -27,7 +27,7 @@ Node 3 is the Iperf client, which connects to the node1 (traffic will be send up
 iperf3 -c 127.0.0.1 -p 4201 -P 1
 ```
 
-Node 4 is the Iperf Server.
+Node 4 is the Iperf Server, which will receive the traffic after it went through node 1 and 2, possibly with a tcp to quic to tcp translation
 ```
 iperf3 -c 127.0.0.1 -p 4201 -P 1
 ```
