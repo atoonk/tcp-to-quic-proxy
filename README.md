@@ -38,8 +38,9 @@ testing on my laptop I see quite a big difference between TCP and Quic
 Quic performance: ~ 1.25 Gbits/sec
 TCP performance: ~ 18.3 Gbits/sec
 
-Maybe related to TCP TSO? Likely packet size. The QUIC draft forbids using packet sizes larger than 1280 bytes (UDP packet size) if no PMTUD is done. 
-Update: yah, if we set the lo0 mtu to 1200 i get very similar results between "tcp-tcp" vs "quic-quic". Can't compete with bigger packets.. no matter gow fancy your congestion protocol ;)
+⚠️ Maybe related to TCP TSO? Likely packet size. The QUIC draft forbids using packet sizes larger than 1280 bytes (UDP packet size) if no PMTUD is done. 
+
+Update: yah, if we set the lo0 mtu to 1200 i get very similar results between "tcp-tcp" vs "quic-quic". Can't compete with bigger packets.. no matter how fancy your congestion algortihm or transport protocol us ;)
 
 ![Iperf restuls Quic](testresults.png)
 
