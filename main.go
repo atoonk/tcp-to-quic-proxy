@@ -74,10 +74,10 @@ func main() {
 					defer conn2.Close()
 					fmt.Println("[+] upstream opened")
 
-					closer := make(chan struct{}, 2)
-					go copy(closer, conn2, conn)
-					go copy(closer, conn, conn2)
-					<-closer
+					doneCh := make(chan bool)
+					go copy(doneCh, conn2, conn)
+					go copy(doneCh, conn, conn2)
+					<-doneCh
 				} else if *remoteProto == "quic" {
 					conn2 := getQuicUpstream()
 					if conn2 == nil {
@@ -91,10 +91,10 @@ func main() {
 					}
 					defer stream.Close()
 
-					closer := make(chan struct{}, 2)
-					go copy(closer, stream, conn)
-					go copy(closer, conn, stream)
-					<-closer
+					doneCh := make(chan bool)
+					go copy(doneCh, stream, conn)
+					go copy(doneCh, conn, stream)
+					<-doneCh
 				}
 				log.Println("Connection complete", conn.RemoteAddr())
 			}()
@@ -150,7 +150,7 @@ func main() {
 					defer conn2.Close()
 					fmt.Println("[+] upstream opened")
 
-					closer := make(chan struct{}, 2)
+					closer := make(chan bool)
 					go copy(closer, conn2, stream)
 					go copy(closer, stream, conn2)
 					<-closer
@@ -168,7 +168,7 @@ func main() {
 					}
 					defer stream.Close()
 
-					closer := make(chan struct{}, 2)
+					closer := make(chan bool)
 					go copy(closer, stream, stream2)
 					go copy(closer, stream2, stream)
 					<-closer
@@ -208,11 +208,11 @@ func getTCPUpstream() (conn net.Conn) {
 	return conn
 }
 
-func copy(closer chan struct{}, dst io.Writer, src io.Reader) {
+func copy(closer chan bool, dst io.Writer, src io.Reader) {
 	//r := io.TeeReader(src, dst)
 	//_, _ = io.Copy(os.Stdout, r)
 	fmt.Println("[+] Copying data!")
 	io.Copy(dst, src)
 	fmt.Println("[+] done Copying data")
-	closer <- struct{}{} // connection is closed, send signal to stop proxy
+	closer <- true // connection is closed, send signal to stop proxy
 }
