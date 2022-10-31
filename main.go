@@ -55,6 +55,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+		defer listener.Close()
 		for {
 			conn, err := listener.Accept()
 			log.Println("New connection", conn.RemoteAddr())
@@ -62,6 +63,7 @@ func main() {
 				log.Println("error accepting connection", err)
 				continue
 			}
+
 			go func() {
 				defer conn.Close()
 				if *remoteProto == "tcp" {
