@@ -45,8 +45,11 @@ node 1
 ```
 ./tcp-to-any-proxy -l 127.0.0.1:4201 -r http://127.0.0.1:4202 -p tcp -u ws
 ```
+
 node 2
+```
 ./tcp-to-any-proxy  -l 127.0.0.1:4202 -r 127.0.0.1:4203 -p ws -u tcp
+```
 
 # Results
 Using the -u and -p flag you can control the protocol between node 1 and node 2 (either tcp or quick).
